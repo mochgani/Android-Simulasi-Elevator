@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
 
         cekFloor();
 
+        eML.actualFloor = mDB.cekSession();
+
         if(eML.kondisiElevator == false && eML.kondisiPintu == false){
             hideTombolDalam();
         }
@@ -305,6 +307,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         mDB.updateHistory(j);
+                        mDB.updateSession(j);
                         txtFloor.setText(String.valueOf(j));
                         cekPintu();
                     }
@@ -319,6 +322,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         mDB.updateHistory(j);
+                        mDB.updateSession(j);
                         txtFloor.setText(String.valueOf(j));
                         cekPintu();
                     }

@@ -116,6 +116,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public long updateSession(int floor) {
+        int mNumberOfRowsUpdated = -1;
+        try {
+            if (mWritableDB == null) {mWritableDB = getWritableDatabase();}
+            ContentValues values = new ContentValues();
+            values.put(KEY_FLOOR, floor);
+
+            mNumberOfRowsUpdated = mWritableDB.update(SESSION_TABLE, //table to change
+                    values, // new values to insert
+                    KEY_DEST + " = ?", // selection criteria for row (in this case, the _id column)
+                    new String[]{String.valueOf(1)}); //selection args; the actual value of the id
+
+        } catch (Exception e) {
+            Log.d (TAG, "UPDATE EXCEPTION! " + e.getMessage());
+        }
+        return mNumberOfRowsUpdated;
+    }
+
     public long insertHistory(int floor, String condition, int destinationFloor) {
         long newId = 0;
 
