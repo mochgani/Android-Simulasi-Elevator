@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         cekFloor();
 
         eML.actualFloor = mDB.cekSession();
+        txtFloor.setText(String.valueOf(eML.actualFloor));
 
         if(eML.kondisiElevator == false && eML.kondisiPintu == false){
             hideTombolDalam();

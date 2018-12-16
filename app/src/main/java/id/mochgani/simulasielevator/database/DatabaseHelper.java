@@ -18,7 +18,7 @@ import java.util.Date;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     private static final String SESSION_TABLE = "t_session";
     private static final String HISTORY_TABLE = "t_history";
     private static final String DATABASE_NAME = "db_simulasielevator";
@@ -73,6 +73,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
+        values.put(KEY_ID, 1);
         values.put(KEY_FLOOR, 1);
         values.put(KEY_DATE, dateNow);
         db.insert(SESSION_TABLE, null, values);
@@ -125,7 +126,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             mNumberOfRowsUpdated = mWritableDB.update(SESSION_TABLE, //table to change
                     values, // new values to insert
-                    KEY_DEST + " = ?", // selection criteria for row (in this case, the _id column)
+                    KEY_ID + " = ?", // selection criteria for row (in this case, the _id column)
                     new String[]{String.valueOf(1)}); //selection args; the actual value of the id
 
         } catch (Exception e) {
