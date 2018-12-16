@@ -295,8 +295,9 @@ public class MainActivity extends AppCompatActivity {
 
         txtCondition.setText(kondisi);
 
-        for (int val:mDB.getHistory(kondisiJalan)) {
-            for (int i=eML.floor;i<=val;i++) {
+        //for (int val:mDB.getHistory(kondisiJalan)) {
+        if(kondisi.equals("UP")) {
+            for (int i = eML.floor; i <= mDB.getHistorySingle(); i++) {
                 eML.actualFloor = i;
                 final int j = i;
                 final Handler handler = new Handler();
@@ -308,10 +309,23 @@ public class MainActivity extends AppCompatActivity {
                         cekPintu();
                     }
                 }, 5000);
-
-
+            }
+        } else {
+            for (int i = eML.floor; i >= mDB.getHistorySingle(); i--) {
+                eML.actualFloor = i;
+                final int j = i;
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDB.updateHistory(j);
+                        txtFloor.setText(String.valueOf(j));
+                        cekPintu();
+                    }
+                }, 5000);
             }
         }
+        //}
 
 
         cekFloor();

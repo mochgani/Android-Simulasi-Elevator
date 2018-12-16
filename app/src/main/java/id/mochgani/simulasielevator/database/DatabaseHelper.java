@@ -18,7 +18,7 @@ import java.util.Date;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7;
     private static final String SESSION_TABLE = "t_session";
     private static final String HISTORY_TABLE = "t_history";
     private static final String DATABASE_NAME = "db_simulasielevator";
@@ -160,6 +160,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             // Must close cursor and db now that we are done with it.
             cursor.close();
             return daftar;
+        }
+    }
+
+    public int getHistorySingle(){
+        String query = "SELECT * FROM " + HISTORY_TABLE + " WHERE status='PENDING' ORDER BY " + KEY_ID +" DESC";
+
+        Cursor cursor = null;
+        int val = 0;
+
+        try {
+            if (mReadableDB == null) {mReadableDB = getReadableDatabase();}
+            cursor = mReadableDB.rawQuery(query, null);
+            cursor.moveToFirst();
+            for (int i=0; i < cursor.getCount(); i++){
+                cursor.moveToPosition(i);
+                val = Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_DEST)));
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "QUERY EXCEPTION! " + e.getMessage());
+        } finally {
+            // Must close cursor and db now that we are done with it.
+            cursor.close();
+            return val;
         }
     }
 
